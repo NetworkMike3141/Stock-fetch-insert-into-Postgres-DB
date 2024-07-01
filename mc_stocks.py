@@ -22,12 +22,10 @@ start_date_1year_ago = end_date - timedelta(days=365)
 
 data = yf.download(tickers, start=start_date_1year_ago, end=end_date)['Close'].round(2)
 
-# Calculate moving averages
 moving_avg_90 = data.rolling(window=90, min_periods=1).mean().round(2)
 moving_avg_180 = data.rolling(window=180, min_periods=1).mean().round(2)
 moving_avg_365 = data.rolling(window=365, min_periods=1).mean().round(2)
 
-# Prepare averages dictionary
 all_averages = {}
 for ticker in tickers:
     all_averages[ticker] = {
@@ -73,7 +71,7 @@ def insert_moving_averages():
                 "365-day MA" NUMERIC(10,2)
             )
         """)
-        #print("A new table has been created.")
+        #print("Created a new table.")
 
         data_to_insert = []
         for ticker, averages in all_averages.items():
